@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,12 @@ using System.Text;
 namespace Business.Concrete
 {
     public class CarManager : ICarService //İş kodlarının yazıldığı bölümdür.
-    {
-        ICarDal _carDal;
+    { 
+        ICarDal _carDal; 
 
         public CarManager(ICarDal carDal)
         {
-            _carDal = carDal;
+            _carDal = carDal; //hangi data access layer ile çalışacaksak ona geçiş yapıyoruz.
         }
 
         public List<Car> GetAll()
@@ -32,16 +33,25 @@ namespace Business.Concrete
             return _carDal.GetAll(p => p.ColorId == colorId).ToList();
         }
 
+        
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
+        }
+
         public void Add(Car car)
         {
-            if (car.Description.Length <2 || car.DailyPrice <= 0)
-            {
-                Console.WriteLine("Araç ismini veya günlük fiyatı yanlış girdiniz.");
-            }
-            else
-            {
-                _carDal.Add(car);
-            }
+            _carDal.Add(car);
+        }
+
+        public void Delete(Car car)
+        {
+            _carDal.Delete(car);
+        }
+
+        public void Update(Car car)
+        {
+            _carDal.Update(car);
         }
     }
 }
