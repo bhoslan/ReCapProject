@@ -2,7 +2,8 @@
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
-using DataAccess.Abstract; 
+using DataAccess.Abstract;
+using Core.Utilities.Results;
 
 namespace Business.Concrete
 {
@@ -15,19 +16,22 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        public void Add(Color color)
+        public IResult Add(Color color)
         {
             _colorDal.Add(color );
+            return new Result(true, "Color added.");
         }
 
-        public void Delete(Color color)
+        public IResult Delete(Color color)
         {
             _colorDal.Delete(color);
+            return new Result(true, "Color deleted.");
         }
 
-        public void Update(Color color)
+        public IResult Update(Color color)
         {
             _colorDal.Update(color);
+            return new Result(true, "Color updated.");
         }
         public List<Color> GetAll()
         {

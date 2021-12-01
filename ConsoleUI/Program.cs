@@ -50,7 +50,7 @@ namespace ConsoleUI
         private static void BrandCrudOp()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            brandManager.Add(new Brand { BrandName = "Toyota", BrandId = 7 });
+            brandManager.Add(new Brand { BrandName = "Jaguar", BrandId = 7});
             brandManager.Delete(new Brand { BrandId = 7 });
             brandManager.Update(new Brand { BrandName = "Jaguar", BrandId = 7 });
             foreach (var brands in brandManager.GetAll())
@@ -66,17 +66,17 @@ namespace ConsoleUI
         private static void CarCrudOp()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            carManager.Add(new Car { BrandId = 5, CategoryId = 1, ColorId = 6, DailyPrice = 195, ModelYear = 2021, Description = "Audi A6" });
-            carManager.Delete(new Car { Id = 2007 });
-            carManager.Update(new Car { Id = 4, BrandId = 4, ColorId = 9, CategoryId = 1, DailyPrice = 330, Description = "Mercedes C200", ModelYear = 2020 });
-            foreach (var item in carManager.GetCarsByColorId(12))
-            {
-                Console.WriteLine(item.Description);
-            }
-            foreach (var cars in carManager.GetAll())
-            {
-                Console.WriteLine(cars.Description);
-            }
+            //carManager.Add(new Car { BrandId = 5, CategoryId = 1, ColorId = 6, DailyPrice = 195, ModelYear = 2021, Description = "Audi A6" });
+            //carManager.Delete(new Car { Id = 3002 });
+            //carManager.Update(new Car { Id = 5, BrandId = 5, ColorId = 6, CategoryId = 1, DailyPrice = 330, Description = "Audi A6", ModelYear = 2021 });
+            //foreach (var item in carManager.GetCarsByColorId(12))
+            //{
+            //    Console.WriteLine(item.Description);
+            //}
+            //foreach (var cars in carManager.GetAll())
+            //{
+            //    Console.WriteLine(cars.Description);
+            //}
         }
 
         private static void Previous()
