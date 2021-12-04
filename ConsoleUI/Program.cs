@@ -25,7 +25,7 @@ namespace ConsoleUI
         private static void GetCarDetails()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var cars in carManager.GetCarDetails())
+            foreach (var cars in carManager.GetCarDetails().Data)
             {
                 Console.WriteLine(cars.CarName + " --- " + cars.BrandName + " --- " + cars.ColorName + " --- " + cars.DailyPrice);
             }
@@ -37,11 +37,11 @@ namespace ConsoleUI
             colorManager.Add(new Color { ColorId = 3, ColorName = "Dark Grey" });
             colorManager.Delete(new Color { ColorId = 12 });
             colorManager.Update(new Color { ColorId = 9, ColorName = "Blue" });
-            foreach (var colors in colorManager.GetAll())
+            foreach (var colors in colorManager.GetAll().Data)
             {
                 Console.WriteLine(colors.ColorName);
             }
-            foreach (var colors in colorManager.GetCarsByColorId(1))
+            foreach (var colors in colorManager.GetCarsByColorId(1).Data)
             {
                 Console.WriteLine(colors.ColorName);
             }
@@ -53,11 +53,11 @@ namespace ConsoleUI
             brandManager.Add(new Brand { BrandName = "Jaguar", BrandId = 7});
             brandManager.Delete(new Brand { BrandId = 7 });
             brandManager.Update(new Brand { BrandName = "Jaguar", BrandId = 7 });
-            foreach (var brands in brandManager.GetAll())
+            foreach (var brands in brandManager.GetAll().Data)
             {
                 Console.WriteLine(brands.BrandName);
             }
-            foreach (var brands in brandManager.GetCarsByBrandId(3))
+            foreach (var brands in brandManager.GetCarsByBrandId(3).Data)
             {
                 Console.WriteLine(brands.BrandName);
             }
@@ -91,7 +91,7 @@ namespace ConsoleUI
                 Description = "Renault Megane 5",
                 ModelYear = 2019
             });
-            Console.WriteLine(carManager.GetCarsByBrandId(1).ToList());
+            Console.WriteLine(carManager.GetCarsByBrandId(1));
         }
     }
 }

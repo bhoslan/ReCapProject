@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using DataAccess.Abstract;
 using Core.Utilities.Results;
+using Business.Constants;
 
 namespace Business.Concrete
 {
@@ -19,28 +20,28 @@ namespace Business.Concrete
         public IResult Add(Color color)
         {
             _colorDal.Add(color );
-            return new Result(true, "Color added.");
+            return new SuccessResult(Messages.ColorAdded);
         }
 
         public IResult Delete(Color color)
         {
             _colorDal.Delete(color);
-            return new Result(true, "Color deleted.");
+            return new SuccessResult(Messages.ColorDeleted);
         }
 
         public IResult Update(Color color)
         {
             _colorDal.Update(color);
-            return new Result(true, "Color updated.");
+            return new SuccessResult(Messages.ColorUpdated);
         }
-        public List<Color> GetAll()
+        public IDataResult<List<Color>> GetAll()
         {
-            return _colorDal.GetAll();
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
         }
 
-        public List<Color> GetCarsByColorId(int ColorId)
+        public IDataResult<List<Color>> GetCarsByColorId(int ColorId)
         {
-            return _colorDal.GetAll(c => c.ColorId == ColorId);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(c => c.ColorId == ColorId));
         }
 
         
