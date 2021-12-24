@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -14,8 +15,9 @@ using System.Text;
 namespace Business.Concrete
 {
     public class CarManager : ICarService //İş kodlarının yazıldığı bölümdür.
-    { 
-        ICarDal _carDal; 
+    {
+        ICarDal _carDal;
+        IBrandService _brandService;
 
         public CarManager(ICarDal carDal)
         {
@@ -37,7 +39,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == colorId).ToList());
         }
 
-        
+
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
@@ -45,8 +47,12 @@ namespace Business.Concrete
 
         public IResult Add(Car car)
         {
-           
-                _carDal.Add(car);
+            IResult result = BusinessRules.Run(CheckCarDescriptionExists(car), CheckIfBrandLimitExceed());
+            if (result!=null)
+            {
+                return result;
+            }
+            _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
         }
 
@@ -60,6 +66,27 @@ namespace Business.Concrete
         {
             _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);
+        }
+        private IResult CheckCarDescriptionExists(Car car)
+        {
+            var result = _carDal.GetAll();
+            foreach (var arac in result)
+            {
+                if (arac.Description == car.Description)
+                {
+                    return new ErrorResult();
+                }
+            }
+            return new SuccessResult();
+        }
+        private IResult CheckIfBrandLimitExceed()
+        {
+            var result = _brandService.GetAll();
+            if (result.Data.Count>15)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
         }
     }
 }

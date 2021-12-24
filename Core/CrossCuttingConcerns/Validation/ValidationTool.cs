@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Core.CrossCuttingConcerns.Validation
 {
-    public static class ValidationTool
+    public static class ValidationTool //static olmasının sebebi tek bir instance üretimiyle ihtiyacı karşılamaktır.
     {
-        public static void Validate(IValidator validator, object entity) //entity yada dto olabilir.
+        public static void Validate(IValidator validator, object entity) //entity yada dto olabilir.static class ın metodu static olur
         {
             var context = new ValidationContext<object>(entity); //Entity, validator
             var result = validator.Validate(context);
